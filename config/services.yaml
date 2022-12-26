@@ -6,8 +6,18 @@
 parameters:
 
 services:
+    App\Services\Message:
+        arguments:
+            $message: 'Hello world'
+
+    App\EventListener\HelloListener:
+        tags:
+            - { name: kernel.event_listener, event: hello.event, method: helloBack }
+
     # default configuration for services in *this* file
     _defaults:
+        bind:
+            $message: 'Hello world'
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
