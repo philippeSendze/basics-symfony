@@ -2,10 +2,22 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="article")
+ */
 class Article
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
     /**
      * @Assert\Length(
      *  min = 10,
@@ -13,15 +25,24 @@ class Article
      *  minMessage = "Ce titre est trop court",
      *  maxMessage = "Ce titre est trop long"
      * )
+     * @ORM\Column(type="string")
      */
     private $title;
 
-    /** @Assert\NotBlank(message="Le contenu ne peut être vide") */
+    /** @Assert\NotBlank(message="Le contenu ne peut être vide")
+     * @ORM\Column(type="text")
+     */
     private $content;
 
-    /** @Assert\NotBlank(message="Un auteur doit être associé à l'article") */
+    /** @Assert\NotBlank(message="Un auteur doit être associé à l'article")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy = "article", cascade={"persist"})
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     */
     private $author;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
     private $date;
 
     /**
@@ -86,6 +107,22 @@ class Article
     public function setDate($date): void
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
 }
