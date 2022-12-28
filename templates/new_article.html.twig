@@ -18,6 +18,14 @@
                 {{ form_row(form.author) }}
                 {{ form_row(form.date) }}
                 <button type="submit" class="btn btn-primary">Créer</button>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="section">
+                        {# <a  href="{{ path('admin_post_edit', {id: post.id}) }}"> #}
+                        <a href="">
+                            <i class="fa fa-edit" aria-hidden="true"></i> {{ 'Modifier'|trans }}
+                        </a>
+                    </div>
+                {% endif %}
             {{ form_end(form) }}
         </div>
     </div>

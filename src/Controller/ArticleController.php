@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Author;
 use App\Form\ArticleType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,6 +40,15 @@ class ArticleController extends AbstractController
         return $this->render('new_article.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
 
+    /**
+     * @IsGranted("EDIT", subject="article")
+     */
+    public function edit(Article $article)
+    {
+        if (!$this->isGranted('EDIT', $article)) {
+            throw $this->createAccessDeniedException();
+        }
     }
 }
