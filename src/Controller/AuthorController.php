@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthorController extends AbstractController
 {
     /**
-     * @Route("/author/new")
+     * @Route("/author/new", name="new_author")
      */
     public function new (Request $request) {
         $author = new Author();

@@ -8,13 +8,15 @@ use App\Form\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/article/new")
+     * @Route("/article/new", name="new_article")
      */
-    public function new(Request $request) {
+    public function new(Request $request, Security $security) {
+        dump($security->getUser());
         $article = new Article();
         $publicationDate = new \DateTime('now');
         $article->setTitle('Hello world');
